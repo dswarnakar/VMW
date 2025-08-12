@@ -25,3 +25,22 @@
       on the guest OS and Tools version. A separate reboot schedule might be necessary.
 #>
 
+param(
+    [Parameter(Mandatory=$true)]
+    [string]$vCenterServer,
+
+    [Parameter(Mandatory=$false)]
+    [string]$LogFilePath = "C:\Logs\VMwareToolsUpdate_$(Get-Date -Format 'yyyyMMdd_HHmmss').log"
+)
+
+# Function for logging messages
+function Write-Log {
+    param(
+        [string]$Message,
+        [string]$Type = "Information" # Can be Information, Warning, Error
+    )
+    $LogEntry = "$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss') [$Type] $Message"
+    Add-Content -Path $LogFilePath -Value $LogEntry
+    Write-Host $LogEntry
+}
+
