@@ -53,3 +53,14 @@ if (-not (Get-Module -ListAvailable -Name VMware.VimAutomation.Core)) {
     exit 1
 }
 
+# Connect to vCenter Server
+try {
+    Write-Log -Message "Attempting to connect to vCenter Server: $vCenterServer"
+    Connect-VIServer -Server $vCenterServer -Credential (Get-Credential) -ErrorAction Stop
+    Write-Log -Message "Successfully connected to vCenter Server: $vCenterServer"
+}
+catch {
+    Write-Log -Message "Failed to connect to vCenter Server: $_.Exception.Message" -Type "Error"
+    exit 1
+}
+
