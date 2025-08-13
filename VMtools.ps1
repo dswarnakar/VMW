@@ -64,3 +64,17 @@ catch {
     exit 1
 }
 
+# Get VMs with outdated VMware Tools
+Write-Log -Message "Identifying VMs with outdated VMware Tools..."
+$vmsToUpdate = Get-VM | Get-VMGuest | Where-Object {$_.ToolsVersionStatus -eq "guestToolsNeedUpgrade" -and $_.State -eq "Running"}
+
+if ($vmsToUpdate.Count -eq 0) {
+    Write-Log -Message "No VMs found with outdated and running VMware Tools."
+}
+else {
+    Write-Log -Message "$($vmsToUpdate.Count) VMs identified for VMware Tools update."
+
+    foreach ($vmGuest in $vmsToUpdate) {
+        $vm = $vmGuest.VM
+        Write-Log -Message "Processing VM: $($vm.Name)"
+
