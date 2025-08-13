@@ -44,3 +44,12 @@ function Write-Log {
     Write-Host $LogEntry
 }
 
+# --- Script Start ---
+Write-Log -Message "Script initiated for VMware Tools update on vCenter Server: $vCenterServer"
+
+# Check if PowerCLI modules are installed and imported
+if (-not (Get-Module -ListAvailable -Name VMware.VimAutomation.Core)) {
+    Write-Log -Message "VMware PowerCLI module 'VMware.VimAutomation.Core' not found. Please install it." -Type "Error"
+    exit 1
+}
+
