@@ -78,3 +78,15 @@ else {
         $vm = $vmGuest.VM
         Write-Log -Message "Processing VM: $($vm.Name)"
 
+        # Optional: Take a snapshot before updating tools
+        try {
+            Write-Log -Message "Taking snapshot for VM: $($vm.Name)"
+            New-Snapshot -VM $vm -Name "Pre-VMwareTools-Update-$(Get-Date -Format 'yyyyMMdd_HHmmss')" -Description "Snapshot before forced VMware Tools update" -Memory:$false -Quiesce:$false -Confirm:$false -ErrorAction Stop
+            Write-Log -Message "Snapshot created successfully for VM: $($vm.Name)"
+        }
+        catch {
+            Write-Log -Message "Failed to create snapshot for VM $($vm.Name): $_.Exception.Message" -Type "Error"
+            # Decide if you want to stop or continue without a snapshot
+            # For this example, we'll continue, but in production, you might want to stop.
+        }
+
