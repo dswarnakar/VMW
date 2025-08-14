@@ -90,3 +90,27 @@ else {
             # For this example, we'll continue, but in production, you might want to stop.
         }
 
+        # Perform the forced update without reboot
+        try {
+            Write-Log -Message "Initiating forced VMware Tools update for VM: $($vm.Name) (No Reboot)"
+            Update-Tools -VM $vm -NoReboot -Force -ErrorAction Stop
+            Write-Log -Message "VMware Tools update initiated for VM: $($vm.Name)."
+        }
+        catch {
+            Write-Log -Message "Failed to initiate VMware Tools update for VM $($vm.Name): $_.Exception.Message" -Type "Error"
+        }
+    }
+}
+
+# Disconnect from vCenter Server
+try {
+    Write-Log -Message "Disconnecting from vCenter Server: $vCenterServer"
+    Disconnect-VIServer -Server $vCenterServer -Confirm:$false -ErrorAction Stop
+    Write-Log -Message "Successfully disconnected from vCenter Server: $vCenterServer"
+}
+catch {
+    Write-Log -Message "Failed to disconnect from vCenter Server: $_.Exception.Message" -Type "Error"
+}
+
+Write-Log -Message "Script finished."
+# --- Script End ---
