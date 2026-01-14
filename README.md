@@ -2,7 +2,7 @@
 
 A script (or set of scripts) for automating the discovery, monitoring, or provisioning of VMware datastores within a vSphere environment. This project uses [specify technology, e.g., PowerCLI, Python SDK, Terraform] to interact with the vCenter API.
 
-## Description
+## Description!
 
 This project provides automation for essential VMware datastore tasks.
 
@@ -27,3 +27,5 @@ These instructions will get you a copy of the project up and running on your loc
 1.  Clone the repository:
     ```bash
     git clone 
+)
+*   [HashiCorp Packer vSphere Builder Documentation](
